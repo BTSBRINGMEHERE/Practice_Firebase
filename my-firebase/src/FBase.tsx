@@ -1,4 +1,9 @@
 import { initializeApp } from "firebase/app"
+import {
+	getAuth,
+	signInWithEmailAndPassword,
+	createUserWithEmailAndPassword,
+} from "firebase/auth"
 
 const {
 	VITE_FIREBASE_API_KEY,
@@ -20,4 +25,5 @@ const firebaseConfig = {
 	appId: VITE_FIREBASE_APP_ID,
 }
 
-export default initializeApp(firebaseConfig)
+export const app = initializeApp(firebaseConfig)
+export const authService = getAuth()
