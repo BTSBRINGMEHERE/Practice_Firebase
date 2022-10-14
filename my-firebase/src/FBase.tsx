@@ -1,9 +1,5 @@
 import { initializeApp } from "firebase/app"
-import {
-	getAuth,
-	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
-} from "firebase/auth"
+import { getAuth } from "firebase/auth"
 
 const {
 	VITE_FIREBASE_API_KEY,
