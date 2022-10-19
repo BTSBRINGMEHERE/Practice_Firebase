@@ -5,14 +5,14 @@ import Home from "../routes/Home"
 import Profile from "../routes/Profile"
 import Navigation from "./Navigation"
 
-const Routers = ({ isLoggedIn }: any) => {
+const Routers = ({ isLoggedIn, userObj }: any) => {
 	return (
 		<BrowserRouter>
 			{isLoggedIn && <Navigation />}
 			<Routes>
 				{isLoggedIn ? (
 					<>
-						<Route path="/" element={<Home />} />
+						<Route path="/" element={<Home userObj={userObj} />} />
 						<Route path="Profile" element={<Profile />} />
 					</>
 				) : (
