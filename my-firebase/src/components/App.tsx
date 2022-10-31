@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Routers from "./Routers"
 import { authService } from "../FBase"
+import { updateCurrentUser, updateProfile } from "firebase/auth"
 
 function App() {
 	const [init, setInit] = useState(false)
@@ -9,18 +10,30 @@ function App() {
 	useEffect(() => {
 		authService.onAuthStateChanged((user) => {
 			if (user) {
-				setIsLoggedIn(true)
-				setUserObj(user)
-			} else {
-				setIsLoggedIn(false)
+				setUserObj({
+					displayName: user.displayName,
+					uid: user.uid,
+					updateProfile: (args: any) =>
+						updateProfile(user, { displayName: user.displayName }),
+				})
 			}
 			setInit(true)
 		})
 	}, [])
+
+	const refreshUser = async () => {
+		await updateCurrentUser(authService, authService.currentUser)
+		setUserObj(authService.currentUser)
+	}
+
 	return (
 		<>
 			{init ? (
-				<Routers isLoggedIn={isLoggedIn} userObj={userObj} />
+				<Routers
+					refreshUser={refreshUser}
+					isLoggedIn={Boolean(userObj)}
+					userObj={userObj}
+				/>
 			) : (
 				"Initailizing...."
 			)}
